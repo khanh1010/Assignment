@@ -1,75 +1,41 @@
-import helper.CsvHelper;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class SalesItem {
 
-	private String itemCode;
-	private String itemName;
-	private int price;
+    private String itemCode;
+    private String itemName;
+    private int price;
 
-	//コンストラクタ
-	public SalesItem() throws IOException {
-		super();
+    //コンストラクタ
+    public SalesItem(String itemCode, String itemName, int price) {
+        super();
+        setItemCode(itemCode);
+        setItemName(itemName);
+        setPrice(price);
+    }
 
-	}
-	public List<SalesItem> readItem() throws IOException {
+    public String getItemCode() {
+        return itemCode;
+    }
 
-		List<SalesItem> items = new ArrayList<>();
-		String InputFilesDirPath = "D:\\assignment\\input\\SalesItem.csv";
+    public void setItemCode(String itemCode) {
+        this.itemCode = itemCode;
+    }
 
-		CSVParser parser = CsvHelper.getCSVParser(InputFilesDirPath);
-		for (CSVRecord record : parser) {
-			SalesItem item = new SalesItem();
+    public String getItemName() {
+        return itemName;
+    }
 
-			String itemCode = record.get("商品コード");
-			item.setItemCode(itemCode);
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
 
-			String itemName = record.get("商品名");
-			item.setItemName(itemName);
+    public int getPrice() {
+        return price;
+    }
 
-			int price = Integer.parseInt(record.get("単価"));
-			item.setPrice(price);
-			items.add(item);
+    public void setPrice(int price) {
+        this.price = price;
+    }
 
-		}
-		return items;
-
-	}
-
-	public String getItemCode() {
-		return itemCode;
-	}
-
-	public void setItemCode(String itemCode) {
-		this.itemCode = itemCode;
-	}
-
-	public String getItemName() {
-		return itemName;
-	}
-
-	public void setItemName(String itemName) {
-		this.itemName = itemName;
-	}
-
-	public int getPrice() {
-		return price;
-	}
-
-	public void setPrice(int price) {
-		this.price = price;
-	}
-	
 }
