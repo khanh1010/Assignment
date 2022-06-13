@@ -1,3 +1,4 @@
+
 import com.opencsv.CSVWriter;
 import helper.CsvHelper;
 import org.apache.commons.csv.CSVParser;
@@ -87,9 +88,9 @@ public class Main {
         try {
 
             bf = new BufferedWriter(new FileWriter(file));
-            CSVWriter writer = new CSVWriter(bf);
             String[] header = {"販売日", "売上総額"};
-            writer.writeNext(header);
+            bf.write(header[0]+header[1]);
+            bf.newLine();
             for (Map.Entry<String, Integer> entry :
                     entries.entrySet()) {
 
