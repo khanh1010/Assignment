@@ -18,11 +18,12 @@ public class Main {
     private static final String SALE_LIST_DIR = "D:\\assignment\\input\\SalesList.csv";
     private static final String OUTPUT_FILE_DIR = "D:\\assignment\\output\\OutPutFile.csv";
 
-    public static Map<String, Integer> result = new LinkedHashMap<>();
-    public static List<SalesItem> items = new ArrayList<>();
 
 
     public static void main(String[] args) throws IOException, ParseException {
+
+        Map<String, Integer> result = new LinkedHashMap<>();
+        List<SalesItem> items = new ArrayList<>();
 
         //Read SaleItem
 
