@@ -15,13 +15,13 @@ public class ItemSummary {
     private static final String SALE_LIST_DIR = "D:\\assignment\\input\\SalesList.csv";
     private static final String DISCOUNT_RATE_DIR = "D:\\assignment\\input\\Customer.csv";
 
-    public static List<Customer> discountRates = new ArrayList<>();
-    public static Map<String, Integer> itemSummary = new HashMap<>();
-
-    public static Map<String, Integer> sortedItemSummary = new LinkedHashMap<>();
-    public static List<SalesItem> items = new ArrayList<>();
 
     public static void main(String[] args) throws IOException, ParseException {
+
+        List<Customer> discountRates = new ArrayList<>();
+        Map<String, Integer> itemSummary = new HashMap<>();
+        List<SalesItem> items = new ArrayList<>();
+        Map<String, Integer> sortedItemSummary = new HashMap<>();
 
         CSVParser rateParser = CsvHelper.getCSVParser(DISCOUNT_RATE_DIR);
         for (CSVRecord record : rateParser) {
