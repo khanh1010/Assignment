@@ -1,11 +1,7 @@
-import org.apache.commons.csv.CSVRecord;
-
-import java.util.Objects;
-
 public class Customer {
 
     public String companyName;
-    public String discountRate;
+    public Double discountRate;
 
     //コンストラクタ
     public Customer(String companyName, String discountRate) {
@@ -24,11 +20,11 @@ public class Customer {
         this.companyName = companyName;
     }
 
-    public String getDiscountRate() {
+    public Double getDiscountRate() {
         return discountRate;
     }
 
     public void setDiscountRate(String discountRate) {
-        this.discountRate = discountRate;
+        this.discountRate = Double.valueOf(discountRate);
     }
 }

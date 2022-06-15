@@ -18,7 +18,7 @@ public class ItemSummary {
 
     public static void main(String[] args) throws IOException, ParseException {
 
-        List<Customer> discountRates = new ArrayList<>();
+        List<Customer> customerList = new ArrayList<>();
         Map<String, Integer> itemSummary = new HashMap<>();
         List<SalesItem> items = new ArrayList<>();
         Map<String, Integer> sortedItemSummary = new HashMap<>();
@@ -26,7 +26,7 @@ public class ItemSummary {
         CSVParser rateParser = CsvHelper.getCSVParser(DISCOUNT_RATE_DIR);
         for (CSVRecord record : rateParser) {
             Customer discount = new Customer(record.get("会社名"), record.get("割引率"));
-            discountRates.add(discount);
+            customerList.add(discount);
         }
 
         //Read SaleItem
@@ -46,12 +46,12 @@ public class ItemSummary {
             String itemCode = sales.getItemCode();
             String companyName = sales.getCustomer();
             Optional<SalesItem> matchedItem = items.stream().filter(a -> a.getItemCode().equalsIgnoreCase(itemCode)).findFirst();
-            Optional<Customer> matchedCustomer = discountRates.stream().filter(a -> a.getCompanyName().equalsIgnoreCase(companyName)).findFirst();
+            Optional<Customer> matchedCustomer = customerList.stream().filter(a -> a.getCompanyName().equalsIgnoreCase(companyName)).findFirst();
             if (matchedItem.isPresent()) {
                 String item = matchedItem.get().getItemName();
                 if (itemSummary.containsKey(item)) {
                     if (matchedCustomer.isPresent()) {
-                        double rate = Double.parseDouble(matchedCustomer.get().getDiscountRate());
+                        double rate = matchedCustomer.get().getDiscountRate();
                         double discountedPrice = (1 - rate) * (sales.getAmount() * matchedItem.get().getPrice());
                         int previousValue = (itemSummary.get(item));
                         int latestValue = (int) (previousValue + discountedPrice);
@@ -60,7 +60,7 @@ public class ItemSummary {
                     }
                 } else {
                     if (matchedCustomer.isPresent()) {
-                        double rate = Double.parseDouble(matchedCustomer.get().getDiscountRate());
+                        double rate = matchedCustomer.get().getDiscountRate();
                         int discountedPrice = (int) ((1 - rate) * (sales.getAmount() * matchedItem.get().getPrice()));
                         itemSummary.put(item, discountedPrice);
 
@@ -72,7 +72,7 @@ public class ItemSummary {
         }
         sortedItemSummary = itemSummary.entrySet()
                 .stream()
-                .sorted(Map.Entry.comparingByValue())
+                .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
                         Map.Entry::getValue,
@@ -81,7 +81,7 @@ public class ItemSummary {
 
         for (Map.Entry<String, Integer> entry :
                 sortedItemSummary.entrySet()) {
-            System.out.println(entry.getKey() + "の売上高合計は、" + entry.getValue() + "です");
+            System.out.println(entry.getKey() + "の売上高合計は、" + entry.getValue() + "円です");
         }
 
     }
